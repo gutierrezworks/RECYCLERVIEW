@@ -78,7 +78,9 @@ class SabadosFragment : BaseNavigationFragment(R.layout.fragment_courier_sabado)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
+        //Use ViewModelProvider to survive configuration changes
+        //If you do this:  viewModel = ViewModel() it will create one each time
         viewModel = ViewModelProvider(this)[SabadosViewModel::class.java]
         
         viewModel.items.observe(this) { items ->
