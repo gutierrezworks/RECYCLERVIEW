@@ -63,5 +63,29 @@ class SabadosViewModel: ViewModel() {
 ## Step 4 - Set Up everythin on the Activity/Fragment
 
 ```bash
+class SabadosFragment : BaseNavigationFragment(R.layout.fragment_courier_sabado) {
 
-``
+    private lateinit var viewModel: SabadosViewModel
+    private lateinit var adapter: InfoSabadosAdapter
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView_expPlataforma_sabado)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        adapter = InfoSabadosAdapter()
+        recyclerView.adapter = adapter
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        
+        viewModel = ViewModelProvider(this)[SabadosViewModel::class.java]
+        
+        viewModel.items.observe(this) { items ->
+            adapter.setItems(items)
+        }
+        
+        viewModel.loadItems()
+    }
+}
+```
